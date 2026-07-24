@@ -18,66 +18,119 @@
 
 # 1. Purpose
 
-This document defines the Azure enterprise foundation
-for the Retail Sales Analytics Platform.
 
-The platform will provide:
+This document defines the architecture, governance foundation and
+implementation roadmap for the CloudOne Tech Enterprise Hybrid Data Platform.
 
-- Enterprise data ingestion
-- Data lake storage
-- Data processing
-- Analytics capabilities
-- Fraud detection
-- Data quality validation
-- Operational monitoring
-- Disaster recovery capability
+The platform provides:
 
+- Enterprise identity and access governance
+- Azure Landing Zone and Management Group governance
+- Secure hybrid integration with enterprise source systems
+- Enterprise batch and incremental data ingestion
+- Idempotent and retry-safe data processing
+- Azure Data Lakehouse storage
+- Data validation, profiling and schema enforcement
+- Enterprise data quality management
+- Metadata-driven processing and audit logging
+- Data proof and reconciliation
+- Enterprise data warehouse capabilities
+- Fraud detection and risk analytics
+- Operational monitoring and alerting
+- Backup, disaster recovery and business continuity
+- DEV, TEST and PROD environment separation
+- Infrastructure as Code and controlled CI/CD releases
+- Future expansion into streaming, APIs and advanced machine learning
+
+The mandatory enterprise reliability pattern is:
+
+Retry + Idempotency + Data Quality + Reconciliation + Audit + Alerting
 
 ---
-
 # 2. Architecture Principles
 
-The platform follows these principles:
+The CloudOne Tech Enterprise Hybrid Data Platform follows these enterprise architecture principles.
 
-## Security First
+## 2.1 Security First
 
-Security controls are implemented from the foundation layer.
+Security is implemented from the foundation of the platform.
 
 Includes:
 
 - Microsoft Entra ID
-- RBAC
-- Managed Identity
-- Key Vault
+- Azure RBAC
+- Managed Identities
+- Azure Key Vault
 - Encryption
+- Least Privilege
+- Zero Trust
 
+---
 
-## Environment Separation
+## 2.2 Environment Separation
 
-The platform separates:
+Enterprise workloads are isolated into:
 
 - Development
 - Testing
 - Production
+- Disaster Recovery
 
+Each environment has independent governance, deployment and access controls.
 
-## Production Reliability
+---
 
-The platform supports:
+## 2.3 Production Reliability
 
-- Retry mechanisms
-- Failure handling
-- Monitoring
-- Backup
-- Disaster recovery
+Every production workload follows the mandatory enterprise reliability pattern:
 
+- Retry
+- Idempotency
+- Data Quality
+- Reconciliation
+- Audit
+- Alerting
 
-## Automation
+All ingestion and processing pipelines must be restartable without producing duplicate business data.
 
-Deployment will use:
+---
 
-- Git
-- CI/CD pipelines
+## 2.4 Business Risk and Fraud Protection
+
+The platform supports enterprise fraud detection and risk monitoring through:
+
+- Fraud rules
+- Risk scoring
+- Anomaly detection
+- Fraud alerting
+- Investigation workflows
+- Historical fraud analytics
+
+Fraud controls will initially use rules and analytical patterns, with advanced machine learning introduced in a later architecture version.
+---
+## 2.4 Governance First
+
+Enterprise governance is enforced through:
+
+- Azure Landing Zone
+- Management Groups
+- Azure Policy
+- RBAC
+- Resource Tagging
+- Cost Management
+
+---
+
+## 2.5 Automation
+
+Platform deployment uses:
+
+- GitHub
+- Azure DevOps
+- Azure CLI
+- Bicep
+- Terraform
+- CI/CD Pipelines
 - Infrastructure as Code
 
 
@@ -199,72 +252,104 @@ Microsoft Entra ID provides:
 
 
 ---
-
 # 6. Management Group Architecture
 
+The CloudOne Tech Enterprise Hybrid Data Platform uses Azure Management Groups to provide enterprise governance, policy inheritance and centralized administration.
 
-The Azure environment will use Management Groups
-to provide enterprise governance.
+## Implemented Management Group Hierarchy
 
+```text
+Tenant Root Group
+│
+└── MG-CLOUDONE-ENTERPRISE
+    │
+    ├── MG-PLATFORM
+    │   └── CONE-MGMT-SUB
+    │
+    ├── MG-NONPROD
+    │   ├── DEV
+    │   └── TEST
+    │
+    ├── MG-PROD
+    │
+    └── MG-DR
+```
 
-Structure:
+## Management Group Responsibilities
 
-
-CloudOne Tech Data Platform Tenant
-
-                |
-
-        MG-CloudOne-Enterprise
-
-                |
-
-------------------------------------------------
-
-|                     |                         |
-
-MG-NonProd          MG-Prod              MG-Security
-
-
-
-## MG-NonProd
-
-Purpose:
-
-Contains non-production environments.
-
-Includes:
-
-- Development subscription
-- Testing subscription
-
-
-
-## MG-Prod
+### MG-CLOUDONE-ENTERPRISE
 
 Purpose:
 
-Contains production workloads.
+- Enterprise governance
+- Policy inheritance
+- Security standards
+- Platform-wide compliance
 
-Includes:
+---
 
-- Production subscription
-
-
-
-## MG-Security
+### MG-PLATFORM
 
 Purpose:
 
-Central security and compliance management.
+Hosts shared enterprise platform services and the management subscription.
+
+Contains:
+
+- CONE-MGMT-SUB
+- Shared governance resources
+- Enterprise policies
+- Identity services
+- Monitoring services
+- Cost management
+
+---
+
+### MG-NONPROD
+
+Purpose:
+
+Contains all non-production workloads.
 
 Includes:
 
-- Security policies
-- Compliance controls
-- Monitoring standards
+- Development environment
+- Testing environment
 
+Used for:
 
+- Solution development
+- Integration testing
+- User acceptance testing
 
+---
+
+### MG-PROD
+
+Purpose:
+
+Contains all production workloads.
+
+Used for:
+
+- Live business processing
+- Enterprise reporting
+- Production analytics
+
+---
+
+### MG-DR
+
+Purpose:
+
+Provides disaster recovery governance.
+
+Supports:
+
+- Business continuity
+- Cross-region recovery
+- Disaster recovery testing
+- Failover planning
 ---
 
 # 7. Enterprise Subscription Architecture
@@ -282,7 +367,19 @@ Separate subscriptions are used to provide:
 - Independent deployment lifecycle
 - Compliance governance
 
+## Current Implementation Status
 
+The current CloudOne Tech Azure environment has implemented the enterprise management subscription:
+
+- CONE-MGMT-SUB
+
+This subscription is hosted under:
+
+MG-CLOUDONE-ENTERPRISE
+└── MG-PLATFORM
+    └── CONE-MGMT-SUB
+
+The remaining subscriptions described in this document represent the approved target enterprise architecture and will be created progressively as the platform expands into separate Development, Testing, Production and Disaster Recovery environments.
 
 ## Subscription Hierarchy
 
@@ -509,7 +606,39 @@ Resource groups provide:
 - Cost tracking
 - Operational management
 - Access control
+# 9.0 Platform Resource Groups
 
+The management subscription (CONE-MGMT-SUB) hosts shared platform resource groups that provide governance and operational services for the enterprise platform.
+
+## rg-cone-platform-governance
+
+Purpose:
+
+- Azure Policy
+- Management resources
+- Governance automation
+- Cost Management
+
+---
+
+## rg-cone-platform-security
+
+Purpose:
+
+- Shared Key Vault
+- Shared Managed Identities
+- Security services
+
+---
+
+## rg-cone-platform-monitoring
+
+Purpose:
+
+- Azure Monitor
+- Log Analytics
+- Shared Alert Rules
+- Central Monitoring
 
 ---
 
