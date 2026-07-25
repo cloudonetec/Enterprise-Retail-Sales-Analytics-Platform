@@ -5,13 +5,63 @@
 
 ## Document Information
 
+## Document Information
+
 | Item | Value |
 |---|---|
 | Project | Enterprise Retail Sales Analytics Platform |
+| Platform | CloudOne Tech Enterprise Hybrid Data Platform |
 | Document | Enterprise Cloud Foundation Architecture |
-| Version | 1.0 |
-| Environment | DEV / TEST / PROD |
+| Architecture ID | CONE-HEDP-ARCH-V2.0 |
+| Version | 2.0 |
+| Status | Approved and Locked |
+| Document Owner | CloudOne Tech |
+| Environment | DEV / TEST / PROD / DR |
 | Architecture Type | Enterprise Production Architecture |
+| Classification | Internal |
+| Effective Date | 25-Jul-2026 |
+| Review Cycle | Quarterly |
+| Next Review Date | 25-Oct-2026 |
+
+---
+
+## Document Approval
+
+| Role | Approval Status |
+|---|---|
+| Architecture Owner | Approved |
+| Platform Owner | Approved |
+| Security Owner | Architecture approval recorded; implementation controls subject to phase validation |
+| Business Owner | Architecture approval recorded; business requirements subject to phase validation |
+
+---
+
+## Version History
+
+| Version | Date | Status | Description |
+|---|---|---|---|
+| 1.0 | Initial Release | Superseded | Initial Enterprise Cloud Foundation Architecture |
+| 2.0 | 25-Jul-2026 | Approved and Locked | Locked enterprise production architecture with enhanced reliability, alerting, incident severity, partitioning, sharding governance, reconciliation, fraud response, monitoring, backup and disaster recovery controls |
+
+---
+
+## Architecture Change Control
+
+Architecture Version 2.0 is the approved implementation baseline for the CloudOne Tech Enterprise Hybrid Data Platform.
+
+The approved Version 2.0 architecture must not be modified directly after approval.
+
+Any future architecture change must:
+
+1. Be documented as a formal change request.
+2. Include the reason and expected impact.
+3. Receive architecture review and approval.
+4. Be recorded as a new document version.
+5. Be committed to the project Git repository.
+
+Minor approved changes will use a version such as 2.1.
+
+Major architecture changes will use a new major version such as 3.0.
 
 
 ---
