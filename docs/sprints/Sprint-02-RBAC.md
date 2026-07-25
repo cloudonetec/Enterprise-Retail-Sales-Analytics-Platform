@@ -28,7 +28,6 @@ During this sprint, enterprise Role-Based Access Control (RBAC) was implemented 
 | Security Group | Azure Role | Scope | Status |
 |----------------|------------|-------|--------|
 | GRP-CONE-PLATFORM-ADMINS | Contributor | CONE-MGMT-SUB | ✅ Completed |
-
 | GRP-CONE-GOVERNANCE-ADMINS | Resource Policy Contributor | CONE-MGMT-SUB | ✅ Completed |
 | GRP-CONE-SECURITY-ADMINS | Security Admin | CONE-MGMT-SUB | ✅ Completed |
 | GRP-CONE-DATA-ENGINEERS | Data Factory Contributor | CONE-MGMT-SUB | ✅ Completed |
